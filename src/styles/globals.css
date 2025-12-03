@@ -3,11 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --bg: 255 255 255;
-  --text: 17 24 39;
-  --card: 249 250 251;
-  --brand-primary: 37 99 235;
+  --bg: 239 239 239;
+  --text: 0 0 0;
+  --card: #F7F8FA;
+  --brand-primary: 1 128 225;
   --brand-secondary: 30 64 175;
+
+  --sidebar-bg-color: 247 248 250;
+  --sidebar-text-color: 255 255 255;
+  --sidebar-active-bg-color: #D1D5DB;
+
 }
 
 /* Dark theme */
