@@ -5,7 +5,7 @@ interface NavbarProps {
   title: string;
 }
 
-const NavBar: React.FC<NavbarProps> = ({ title }) => {
+function NavBar({ title }: NavbarProps){
   return (
     <header className="fixed top-0 left-64 right-0 h-16 bg-[rgb(var(--bg))] dark:border-gray-700 flex items-center px-6 gap-6">
       {/* Page title */}

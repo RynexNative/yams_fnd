@@ -30,7 +30,7 @@ const menu: MenuItem[] = [
   { name: "Settings", icon: "⚙️" },
 ];
 
-const SideBar: React.FC = () => {
+function SideBar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const toggleDropdown = (name: string) => {
