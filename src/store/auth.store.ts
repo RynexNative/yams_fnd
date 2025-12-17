@@ -1,22 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import {AuthState, LoginResponseDTO} from "@/dto/auth.dto"
 
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  // permission: [];
-  // any other fields
-}
-
-interface AuthState {
-  user: User | null;
-  token: string | null;
-  login: (data: { user: User; token: string }) => void;
-  logout: () => void;
-}
-export const useAuthStore = create<AuthState>()(
+export const useAuthStore = create<LoginResponseDTO>()(
   persist(
     (set) => ({
       user: null,

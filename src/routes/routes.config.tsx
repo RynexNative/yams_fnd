@@ -4,13 +4,13 @@ import Dashboard from "../pages/teachers/TeacherPage";
 import Login from "../pages/auth/Login";
 // import ForbiddenPage from "../pages/ForbiddenPage";
 import AppLayout from "../components/layouts/AppLayout";
-import { Permission } from "../store/permission.store";
+import { PermissionDTO } from "@/dto/permission.dto";
 
 export interface AppRoute {
   path: string;
   element: React.ReactNode;
   isProtected?: boolean;
-  permission?: Permission;
+  permission?: PermissionDTO;
   layout?: React.ReactNode;
   children?: AppRoute[];
   title?: string; // Optional: page title

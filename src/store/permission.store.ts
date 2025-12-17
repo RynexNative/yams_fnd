@@ -1,32 +1,24 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+import { PermissionDTO } from "@/dto/permission.dto";
+
 /**
  * 🔐 Permission list (contract ya app nzima)
  * Usitumie string ovyo ovyo sehemu nyingine
  */
-export type Permission =
-  | "VIEW_DASHBOARD"
-  | "VIEW_STUDENTS"
-  | "CREATE_STUDENT"
-  | "EDIT_STUDENT"
-  | "DELETE_STUDENT"
-  | "VIEW_TEACHERS"
-  | "MANAGE_USERS"
-  | "VIEW_BILLING"
-  | "MANAGE_SETTINGS";
 
 /**
  * 📦 Permission store state
  */
 interface PermissionState {
-  permissions: Permission[];
+  permissions: PermissionDTO[];
 
   /** Weka permissions zote (hutumika baada ya login) */
-  setPermissions: (permissions: Permission[]) => void;
+  setPermissions: (permissions: PermissionDTO[]) => void;
 
   /** Angalia kama user ana permission fulani */
-  hasPermission: (permission: Permission) => boolean;
+  hasPermission: (permission: PermissionDTO) => boolean;
 
   /** Futa permissions zote (logout) */
   clearPermissions: () => void;

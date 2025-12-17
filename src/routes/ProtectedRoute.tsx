@@ -1,11 +1,11 @@
 import { Navigate } from "react-router-dom";
 import { useAuthStore } from "../store/auth.store";
 import { usePermissionStore } from "../store/permission.store";
-import { Permission } from "../store/permission.store";
+import { PermissionDTO } from "@/dto/permission.dto";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  permission?: Permission;
+  permission?: PermissionDTO;
 }
 
 export default function ProtectedRoute({
@@ -17,7 +17,7 @@ export default function ProtectedRoute({
 
   if (!user) {
     // Not logged in → redirect to login
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   if (permission && !hasPermission(permission)) {
