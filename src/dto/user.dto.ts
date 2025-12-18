@@ -7,3 +7,11 @@ export interface UserDTO {
   email: string;
   // any other fields
 }
+
+export interface ProfileRequestDTO{
+
+}
+
+export interface ProfileResponseDTO{
+  
+}

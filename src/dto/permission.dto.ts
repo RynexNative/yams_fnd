@@ -10,4 +10,5 @@ export type PermissionDTO =
   | "VIEW_TEACHERS"
   | "MANAGE_USERS"
   | "VIEW_BILLING"
-  | "MANAGE_SETTINGS";
+  | "MANAGE_SETTINGS"
+  | "can_request_tenant"

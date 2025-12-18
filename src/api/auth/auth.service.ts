@@ -15,7 +15,7 @@ export const AuthService = {
     body.append("client_secret", API_CONFIG.CLIENT_SECRET);
 
     const { data } = await restClient.post<TokenLoginResponse>(
-      "/token/",
+      `${API_CONFIG.REST_BASE_URL}/token/`,
       body,
       {
         headers: {
@@ -29,9 +29,7 @@ export const AuthService = {
 
 
   // GraphQL login
-  loginGraphQL: async (
-    payload: LoginRequestDTO
-  ): Promise<LoginResponseDTO> => {
+  loginGraphQL: async (payload: LoginRequestDTO): Promise<LoginResponseDTO> => {
     const mutation = `
       mutation Login($email: String!, $password: String!) {
         login(email: $email, password: $password) {

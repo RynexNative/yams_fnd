@@ -24,7 +24,7 @@ export const routes: AppRoute[] = [
     path: "/dashboard",
     element: <Dashboard />,
     isProtected: true,
-    permission: "VIEW_DASHBOARD",
+    permission: "can_request_tenant",
     layout: <AppLayout />,
     title: "Dashboard",
   },

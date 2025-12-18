@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthService } from "@/api/auth/auth.service";
 import { useAuthStore } from "@/store/auth.store";
+import { User } from "@/api/auth/user.service";
+import { usePermissionStore } from "@/store/permission.store"
 
 export default function Login() {
   const navigate = useNavigate();
   const login = useAuthStore((s) => s.login);
-
+  const perm = usePermissionStore((s)=>s.setPermissions)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,23 +20,28 @@ export default function Login() {
     setLoading(true);
 
     try {
+      // 1️⃣ Login
       const res = await AuthService.loginWithOAuth2(email, password);
 
+      if (!res.access_token) throw new Error("No access token received");
+
+      // 2️⃣ Store user + token in Zustand store
       login({
-        user: res.user ?? {
-            id: "temp",
-            name: email,
-            email,
-        },
+        user: res.user ?? { id: "temp", name: email, email },
         token: res.access_token,
-    });
-    console.log(res)
+      });
+
+      // 3️⃣ Hit GraphQL MyProfile
+      const profile = await User.MyProfile(); // token already in headers
+      console.log("Profile:", profile.data[0].role.permissions[0].permissionCode);
+
+      perm(profile.data[0].role.permissions[0].permissionCode)
+
+      // 4️⃣ Navigate to dashboard
       navigate("/dashboard", { replace: true });
     } catch (err: any) {
-      setError(
-        err?.response?.data?.detail ||
-        "Login failed. Check credentials."
-      );
+      console.error(err);
+      setError(err?.response?.data?.detail || "Login failed. Check credentials.");
     } finally {
       setLoading(false);
     }
