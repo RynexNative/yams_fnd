@@ -22,7 +22,7 @@ export default function ProtectedRoute({
 
   if (permission && !hasPermission(permission)) {
     // Logged in but missing permission → 403 page
-    return <Navigate to="/403" replace />;
+    return <Navigate to="/404" replace />;
   }
 
   return <>{children}</>;

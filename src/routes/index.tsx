@@ -3,33 +3,49 @@ import { routes, AppRoute } from "./routes.config";
 import ProtectedRoute from "./ProtectedRoute";
 import React from "react";
 
-function renderRoute(route: AppRoute): React.ReactNode {
-  const element = route.isProtected ? (
-    <ProtectedRoute permission={route.permission}>
-      {route.layout
-        ? React.cloneElement(route.layout, {}, route.element)
-        : route.element}
-    </ProtectedRoute>
-  ) : (
-    route.element
-  );
+export function renderRoutes(routes: AppRoute[]) {
+  return routes.map((route) => {
+    // Protected wrapper
+    const guardedElement = route.isProtected ? (
+      <ProtectedRoute permission={route.permission}>
+        {route.element}
+      </ProtectedRoute>
+    ) : (
+      route.element
+    );
 
-  if (route.children && route.children.length > 0) {
+    // CASE 1: Route has layout (IMPORTANT)
+    if (route.layout) {
+      return (
+        <Route key={route.path} element={route.layout}>
+          <Route
+            path={route.path}
+            element={guardedElement}
+          />
+          {route.children && renderRoutes(route.children)}
+        </Route>
+      );
+    }
+
+    // CASE 2: Normal route
     return (
-      <Route key={route.path} path={route.path} element={element}>
-        {route.children.map((child) => renderRoute(child))}
+      <Route
+        key={route.path}
+        path={route.path}
+        element={guardedElement}
+      >
+        {route.children && renderRoutes(route.children)}
       </Route>
     );
-  }
-
-  return <Route key={route.path} path={route.path} element={element} />;
+  });
 }
+
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        {routes.map((route) => renderRoute(route))}
+        {renderRoutes(routes)}
       </Routes>
     </BrowserRouter>
   );

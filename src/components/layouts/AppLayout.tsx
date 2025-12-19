@@ -7,10 +7,17 @@ import { useTenantStore } from "@/store/tenant.store";
 import { routes, AppRoute } from "@/routes/routes.config";
 import LoadingOverlay from "../ui/LoadingOverlay";
 import Toast from "../ui/Toast";
+import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar"
+// import { AppSidebar } from "@/components/app-sidebar"
+
 
 interface AppLayoutProps {
   title?: string;
 }
+
+const SIDEBAR_WIDTH = "20rem"
+const SIDEBAR_WIDTH_MOBILE = "18rem"
+
 
 export default function AppLayout({ title: defaultTitle }: AppLayoutProps) {
   const { pathname } = useLocation();
@@ -36,17 +43,15 @@ export default function AppLayout({ title: defaultTitle }: AppLayoutProps) {
   const title = defaultTitle ?? findRouteTitle(routes, pathname) ?? "YAMS";
 
   return (
-    <div className={`min-h-screen flex ${theme === "dark" ? "bg-gray-900" : "bg-background"}`}>
-      <Sidebar />
-
-      <div className={`flex-1 transition-all duration-300 ${sidebarCollapsed ? "ml-20" : "ml-64"}`}>
-        <Navbar title={title}/>
-        <main className="pt-20 px-6 relative">
+    <SidebarProvider>
+        <Sidebar />
+        <SidebarInset>
+        <Navbar title={title} children={<SidebarTrigger />}/>
+          {/* <SidebarTrigger /> */}
           <Outlet />
           {loading && <LoadingOverlay />}
           {toastMessage && <Toast message={toastMessage} onClose={clearToast} />}
-        </main>
-      </div>
-    </div>
+        </SidebarInset>
+    </ SidebarProvider>
   );
 }

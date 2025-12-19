@@ -1,86 +1,131 @@
 import React, { useState } from "react";
+import { Users, UserPlus, LayoutDashboard, Settings, File, ChevronRight } from "lucide-react"
+import { menuItems, MenuItem } from "./MenuItems";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarHeader,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarRail,
+} from "@/components/ui/sidebar"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import { useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
 
-interface MenuItem {
-  name: string;
-  icon: string;
-  subMenu?: MenuItem[]; // Optional submenu
+
+
+function isActive(pathname: string, href?: string) {
+  if (!href) return false
+  return pathname === href || pathname.startsWith(href + "/")
 }
 
-const menu: MenuItem[] = [
-  { name: "Dashboard", icon: "📊" },
-  {
-    name: "Students",
-    icon: "👨‍🎓",
-    subMenu: [
-      { name: "All Students", icon: "👥" },
-      { name: "Add Student", icon: "➕" },
-    ],
-  },
-  {
-    name: "Notes",
-    icon: "📝",
-    subMenu: [
-      { name: "All Notes", icon: "📄" },
-      { name: "Add Note", icon: "➕" },
-    ],
-  },
-  { name: "Teachers", icon: "👩‍🏫" },
-  { name: "Parents", icon: "👨‍👩‍👦" },
-  { name: "Billing", icon: "💳" },
-  { name: "Settings", icon: "⚙️" },
-];
 
-function SideBar() {
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+function MenuItemRenderer({ item }: { item: MenuItem }) {
+  const { pathname } = useLocation()
+  const active = isActive(pathname, item.href)
 
-  const toggleDropdown = (name: string) => {
-    setOpenDropdown((prev) => (prev === name ? null : name));
-  };
+  // 👉 CASE 1: HAINA CHILDREN (NORMAL MENU)
+  if (!item.children) {
+    return (
+      <SidebarMenuItem>
+        <SidebarMenuButton
+          asChild
+          isActive={active}
+        >
+          <Link to={item.href!}>
+            {item.icon}
+            {item.label}
+          </Link>
+
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    )
+  }
+
+  const isChildActive = item.children.some((child) =>
+    isActive(pathname, child.href)
+  )
+
+  // 👉 CASE 2: INA CHILDREN (COLLAPSIBLE)
+  return (
+    <SidebarMenuItem>
+      <Collapsible defaultOpen={isChildActive}>
+        <CollapsibleTrigger asChild>
+          <SidebarMenuButton isActive={isChildActive}>
+            <ChevronRight className="transition-transform" />
+            {item.icon}
+            {item.label}
+          </SidebarMenuButton>
+        </CollapsibleTrigger>
+
+        <CollapsibleContent>
+          <SidebarMenuSub>
+            {item.children.map((child, index) => {
+              const childActive = isActive(pathname, child.href)
+
+              return (
+                <SidebarMenuItem key={index}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={childActive}
+                  >
+                    <Link to={child.href!}>
+                      {child.icon}
+                      {child.label}
+                    </Link>
+
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              )
+            })}
+          </SidebarMenuSub>
+        </CollapsibleContent>
+      </Collapsible>
+    </SidebarMenuItem>
+  )
+}
+
+export function SideBar(props: React.ComponentProps<typeof Sidebar>) {
+  const location = useLocation()
+  const pathname = location.pathname
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-60 bg-[rgb(var(--sidebar-bg-color))] shadow-lg border-r border-gray-200 dark:border-gray-700 flex flex-col">
-      {/* Logo */}
-      <div className="p-6 text-2xl font-bold text-brand-primary">YAMS</div>
+    <Sidebar {...props}>
+      <SidebarHeader>
+        <div className="font-bold text-2xl text-center pt-12 p-6">
 
-      {/* Nav Items */}
-      <nav className="flex flex-col gap-1 px-2 mt-4">
-        {menu.map((item) => (
-          <div key={item.name} className="flex flex-col">
-            <button
-              onClick={() =>
-                item.subMenu ? toggleDropdown(item.name) : undefined
-              }
-              className="flex items-center justify-between gap-3 px-3 py-2 text-[rgb(var(--text))] 
-              hover:text-[rgb(var(--sidebar-text-color))] hover:bg-[rgb(var(--brand-primary))] dark:hover:bg-blue-700 transition rounded-full"
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-lg">{item.icon}</span>
-                <span className="font-medium">{item.name}</span>
-              </div>
-              {item.subMenu && (
-                <span className="text-sm">{openDropdown === item.name ? "▲" : "▼"}</span>
-              )}
-            </button>
+        Yams
+        </div>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
 
-            {/* Dropdown submenu */}
-            {item.subMenu && openDropdown === item.name && (
-              <div className="flex flex-col ml-8 mt-1 gap-1">
-                {item.subMenu.map((sub) => (
-                  <button
-                    key={sub.name}
-                    className="flex items-center gap-2 px-3 py-1 text-[rgb(var(--text))] hover:text-[rgb(var(--sidebar-text-color))] hover:bg-[rgb(var(--brand-primary))] dark:hover:bg-blue-700 transition rounded"
-                  >
-                    <span className="text-sm">{sub.icon}</span>
-                    <span className="text-sm">{sub.name}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
-      </nav>
-    </aside>
-  );
-};
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {menuItems.map((item, index) => (
+                <MenuItemRenderer key={index} item={item} />
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarRail />
+    </Sidebar>
+  )
+}
 
 export default SideBar;

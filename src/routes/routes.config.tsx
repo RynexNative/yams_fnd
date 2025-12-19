@@ -1,10 +1,12 @@
-import Dashboard from "../pages/teachers/TeacherPage";
-// import StudentListPage from "../pages/students/StudentListPage";
+import Dashboard from "@/pages/dashboard";
+import StudentListPage from "../pages/students/StudentPage";
+import StudentDetails from "@/pages/students/StudentDetails";
 // import StudentDetailPage from "../pages/students/StudentDetailPage";
 import Login from "../pages/auth/Login";
 // import ForbiddenPage from "../pages/ForbiddenPage";
 import AppLayout from "../components/layouts/AppLayout";
 import { PermissionDTO } from "@/dto/permission.dto";
+import NotFound from "@/pages/Error/NotFound";
 
 export interface AppRoute {
   path: string;
@@ -18,7 +20,7 @@ export interface AppRoute {
 
 export const routes: AppRoute[] = [
   { path: "/login", element: <Login />, title: "Login" },
-  // { path: "/403", element: <ForbiddenPage />, title: "Forbidden" },
+  { path: "/404", element: <NotFound />, title: "Forbidden" },
 
   {
     path: "/dashboard",
@@ -29,20 +31,20 @@ export const routes: AppRoute[] = [
     title: "Dashboard",
   },
 
-  // {
-  //   path: "/students",
-  //   element: <StudentListPage />,
-  //   isProtected: true,
-  //   permission: "VIEW_STUDENTS",
-  //   layout: <AppLayout />,
-  //   title: "Student Management",
-  //   children: [
-  //     {
-  //       path: ":id",
-  //       element: <StudentDetailPage />,
-  //       permission: "VIEW_STUDENTS",
-  //       title: "Student Details",
-  //     },
-  //   ],
-  // },
+  {
+    path: "/students",
+    element: <StudentListPage />,
+    isProtected: true,
+    permission: "can_request_tenant",
+    layout: <AppLayout />,
+    title: "Student Management",
+    children: [
+      {
+        path: "/students/:id",
+        element: <StudentDetails />,
+        permission: "VIEW_BILLING",
+        title: "Student Details",
+      },
+    ],
+  },
 ];
