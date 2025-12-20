@@ -1,10 +1,90 @@
+import * as React from "react";
+import clsx from "clsx";
 
-import { Card } from "flowbite-react";
+/* ================================
+   TYPES
+================================ */
 
-export function Card1() {
-  return (
-    <Card className="max-w-md">
-     
-    </Card>
-  );
+type CardVariant = "default" | "primary" | "success" | "warning" | "danger";
+
+interface BaseProps {
+  className?: string;
+  children: React.ReactNode;
 }
+
+/* ================================
+   VARIANTS
+================================ */
+
+const cardVariants: Record<CardVariant, string> = {
+  default: "bg-white border-gray-200",
+  primary: "bg-blue-50 border-blue-200",
+  success: "bg-green-50 border-green-200",
+  warning: "bg-yellow-50 border-yellow-200",
+  danger: "bg-red-50 border-red-200",
+};
+
+/* ================================
+   CARD
+================================ */
+
+interface CardProps extends BaseProps {
+  variant?: CardVariant;
+}
+
+export const Card: React.FC<CardProps> = ({
+  variant = "default",
+  className,
+  children,
+}) => {
+  return (
+    <div
+      className={clsx(
+        "rounded-2xl border shadow-sm transition-colors duration-200",
+        cardVariants[variant],
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+};
+
+/* ================================
+   CARD HEADER
+================================ */
+
+export const CardHeader: React.FC<BaseProps> = ({
+  className,
+  children,
+}) => (
+  <div className={clsx("px-6 py-4 border-b font-medium", className)}>
+    {children}
+  </div>
+);
+
+/* ================================
+   CARD CONTENT
+================================ */
+
+export const CardContent: React.FC<BaseProps> = ({
+  className,
+  children,
+}) => (
+  <div className={clsx("px-6 py-4", className)}>
+    {children}
+  </div>
+);
+
+/* ================================
+   CARD FOOTER
+================================ */
+
+export const CardFooter: React.FC<BaseProps> = ({
+  className,
+  children,
+}) => (
+  <div className={clsx("px-6 py-4 border-t", className)}>
+    {children}
+  </div>
+);
