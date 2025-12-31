@@ -58,7 +58,7 @@ export const CardHeader: React.FC<BaseProps> = ({
   className,
   children,
 }) => (
-  <div className={clsx("px-6 py-4 border-b font-medium", className)}>
+  <div className={clsx("px-3 border-b font-medium", className)}>
     {children}
   </div>
 );
@@ -71,7 +71,7 @@ export const CardContent: React.FC<BaseProps> = ({
   className,
   children,
 }) => (
-  <div className={clsx("px-6 py-4", className)}>
+  <div className={clsx("px-3", className)}>
     {children}
   </div>
 );
@@ -84,7 +84,7 @@ export const CardFooter: React.FC<BaseProps> = ({
   className,
   children,
 }) => (
-  <div className={clsx("px-6 py-4 border-t", className)}>
+  <div className={clsx("px-3 py-3 border-t", className)}>
     {children}
   </div>
 );

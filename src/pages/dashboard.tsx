@@ -4,7 +4,7 @@ import Image1 from "@/assets/images/png/jump-happy.png"
 
 function dashboard() {
   return (
-    <div className="grid grid-cols-5 auto-rows-max gap-2 " style={{width: '100%',
+    <div className="grid grid-cols-4 auto-rows-max gap-2 " style={{width: '100%',
       height: '100vh',
       paddingTop: '5rem',
       paddingLeft: "2rem",
@@ -25,9 +25,9 @@ It’s a reminder that real growth and success come from doing, not just knowing
           <img src={Image1} alt="" style={{
             position:'absolute',
             top:-65,
-            right:-20,
+            right:-40,
             width:'12rem'
-          }} className='sm-w-[12px]'/>
+          }} className='sm-w-[12px] right-0'/>
           
         </Card>
         <Card variant="primary" className='col-span-2 text-[1.2rem] mt-3 bg-gradient-to-r from-[#CA590394] from-[10%] to-[#FFFFFF] to-[120%] '>
@@ -54,10 +54,18 @@ It’s a reminder that real growth and success come from doing, not just knowing
           
         </Card>
 
-        <Card variant="primary" className="lg:col-span-1 sm:col-span-2 relative bg-gradient-to-r 
-            from-[red]  
-            to-[blue]">
-          <CardHeader>Gas Inventory</CardHeader>
+        <Card variant="primary" className="lg:col-span-1 sm:col-span-2 lg:h-[6rem] flex flex-col justify-center items-center relative bg-gradient-to-r 
+            from-[#27C84080] from-[40%] 
+            to-[#ffff] to-[100%]">
+          <CardHeader className='font-[600] border-b-0 pt-2'>Live Time</CardHeader>
+          <CardContent>10:15:30</CardContent>
+          
+        </Card>
+
+        <Card variant="primary" className="sm:col-span-2 lg:col-span-1 lg:row-span-2 lg:h-[30rem] bg-gradient-to-r 
+            from-[#0180E196] from-[40%] 
+            to-[#ffff] to-[100%]">
+          <CardHeader className='font-[600] border-b-0 pt-2'>Gas Inventory</CardHeader>
           <CardContent>100 KG Available</CardContent>
           
         </Card>
