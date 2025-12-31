@@ -42,8 +42,10 @@ export const Card: React.FC<CardProps> = ({
       className={clsx(
         "rounded-2xl border shadow-sm transition-colors duration-200",
         cardVariants[variant],
-        className
-      )}
+        className,
+        "rounded-2xl border shadow-[0px_3px_5px_0px_rgba(0,0,0,0.50)] transition-colors duration-200",
+
+      ) }
     >
       {children}
     </div>

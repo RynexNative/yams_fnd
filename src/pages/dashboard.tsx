@@ -4,16 +4,16 @@ import Image1 from "@/assets/images/png/jump-happy.png"
 
 function dashboard() {
   return (
-    <div className="grid grid-cols-4 auto-rows-max gap-2 " style={{width: '100%',
+    <div className="grid grid-cols-4 auto-rows-max gap-2 grid-cols-[1fr_1fr_1fr_1.45fr]" style={{width: '100%',
       height: '100vh',
       paddingTop: '5rem',
       paddingLeft: "2rem",
       paddingRight: '1rem'
     }}>
-      <div className='col-span-4 h-6 '>Home</div>
-        <Card variant="primary" className="flex rounded-2xl w-full col-span-5 mt-3 h-[10rem] relative bg-gradient-to-r 
+      <div className='col-span-4 '>Home</div>
+        <Card variant="primary" className="shadow-[0px_4px_5px_1px_rgba(0,0,0,0.50)] flex rounded-2xl w-full col-span-4 mt-3 h-[11rem] relative bg-gradient-to-r 
             from-[#0180E196] from-[42%] 
-            to-[#FFFFFF96] to-[100%] lg:col-span-3 sm:col-span-5">
+            to-[#FFFFFF96] to-[100%] lg:col-span-3 sm:col-span-4">
           <div className='w-[80%] mr-1 md:w-[70%]'>
           <CardHeader className="border-b-0 m-0 pt-2 text-[0.9rem] sm:pb-0 sm:pt-3 md:pt-2 md:text-[0.9rem] lg:py-2 lg:text-[1.2rem] text-[#003B6C] font-[1000] sm:text-[0.9rem]">"Knowledge is not power until applied."</CardHeader>
           <CardContent className='m-0 px-1 py-0 text-[0.6em] sm:py-0 text-[0.7rem]'>Knowledge alone doesn’t create change — it’s only when you apply what you know that it becomes true power. Learning gives you potential, but action unlocks that potential. Without application, knowledge remains just information, not transformation.
@@ -30,10 +30,10 @@ It’s a reminder that real growth and success come from doing, not just knowing
           }} className='sm-w-[12px] right-0'/>
           
         </Card>
-        <Card variant="primary" className='mt-3 col-span-4 bg-gradient-to-r from-[#CA590388] from-[30%] to-[#FFFFFF] to-[112%] h-[10rem] lg:col-span-1 sm:col-span-5 center items-center justify-start pl-4'>
+        <Card variant="primary" className='mt-3 shadow-[0px_4px_5px_1px_rgba(0,0,0,0.50)]  mb-[10px] w-[100%] col-span-4 bg-gradient-to-r from-[#CA590388] from-[30%] to-[#FFFFFF] to-[112%] h-[11rem] lg:col-span-1 sm:col-span-4 center items-center justify-start pl-4'>
           
           <div>
-            <h2 className='text-[#003B6C] font-[700] text-[1.2rem]'>Welcome Back! Mr. Deo</h2>
+            <h2 className='text-[#003B6C] font-[700] text-[1.2rem] mt-2 ml-2'>Welcome Back! Mr. Deo</h2>
           </div>
           <div className='flex center items-center gap-4 mt-3'>
             <img src={Image1} alt="" className='w-[5rem] h-[4rem] rounded-full'/>
@@ -42,6 +42,7 @@ It’s a reminder that real growth and success come from doing, not just knowing
               <p><span className='font-[1000]'>Specialization:</span> Teacher</p>
               <p><span className='font-[1000]'>Subject:</span> Kiswahili</p>
               <p><span className='font-[1000]'>Age:</span> 32</p>
+
             </CardContent>
           </div>
           
@@ -52,15 +53,13 @@ It’s a reminder that real growth and success come from doing, not just knowing
           <CardHeader className='font-[600] border-b-0 pt-2'>Upcoming Lesson</CardHeader>
           <CardContent>Math-Form 1A</CardContent>
           <CardContent>Time-10:30</CardContent>
-          
         </Card>
 
-        <Card variant="primary" className="lg:col-span-1 sm:col-span-2 h-[6rem] flex flex-col justify-center items-center relative bg-gradient-to-r 
+        <Card variant="primary" className=" lg:col-span-1 sm:col-span-2 h-[6rem] flex flex-col justify-center items-center relative bg-gradient-to-r 
             from-[#FF383C80] from-[40%] 
             to-[#ffff] to-[100%]">
           <CardHeader className='font-[600] border-b-0 pt-2'>Present Student</CardHeader>
           <CardContent>120</CardContent>
-          
         </Card>
 
         <Card variant="primary" className="lg:col-span-1 sm:col-span-2 lg:h-[6rem] flex flex-col justify-center items-center relative bg-gradient-to-r 
@@ -71,9 +70,17 @@ It’s a reminder that real growth and success come from doing, not just knowing
           
         </Card>
 
-        <Card variant="primary" className="sm:col-span-2 lg:col-span-1 lg:row-span-2 lg:h-[30rem] bg-gradient-to-r 
-            from-[#0180E196] from-[40%] 
-            to-[#ffff] to-[100%]">
+        <Card variant="primary" className="rounded-[0px] sm:col-span-2 lg:col-span-1 lg:row-span-4 lg:h-[35rem] bg-[#FFF]">
+          <CardHeader className='font-[600] border-b-0 pt-2'>Gas Inventory</CardHeader>
+          <CardContent>100 KG Available</CardContent>
+          
+        </Card>
+        <div className='h-[2rem] col-span-3 items-start transition-colors p-0 mt-1'>
+          <p>
+            Quick Actions
+          </p>
+        </div>
+        <Card variant="primary" className="rounded-[0px] col-span-4 ml-2 sm:col-span-2 lg:col-span-3 lg:row-span-4 lg:h-[25rem] bg-[#FFF]">
           <CardHeader className='font-[600] border-b-0 pt-2'>Gas Inventory</CardHeader>
           <CardContent>100 KG Available</CardContent>
           
