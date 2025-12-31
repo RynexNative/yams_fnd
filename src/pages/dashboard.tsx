@@ -30,7 +30,7 @@ It’s a reminder that real growth and success come from doing, not just knowing
           }} className='sm-w-[12px] right-0'/>
           
         </Card>
-        <Card variant="primary" className='mt-3 bg-gradient-to-r from-[#CA590388] from-[30%] to-[#FFFFFF] to-[112%] h-[10rem] lg:col-span-1 sm:col-span-5 center items-center justify-start pl-4'>
+        <Card variant="primary" className='mt-3 col-span-4 bg-gradient-to-r from-[#CA590388] from-[30%] to-[#FFFFFF] to-[112%] h-[10rem] lg:col-span-1 sm:col-span-5 center items-center justify-start pl-4'>
           
           <div>
             <h2 className='text-[#003B6C] font-[700] text-[1.2rem]'>Welcome Back! Mr. Deo</h2>
