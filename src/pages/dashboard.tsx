@@ -30,17 +30,21 @@ It’s a reminder that real growth and success come from doing, not just knowing
           }} className='sm-w-[12px] right-0'/>
           
         </Card>
-        <Card variant="primary" className='col-span-2 text-[1.2rem] mt-3 bg-gradient-to-r from-[#CA590394] from-[10%] to-[#FFFFFF] to-[120%] '>
-          <CardHeader>Welcome Mr Deo Massawe</CardHeader>
-          <CardContent className='flex gap-4 items-start text-[1.2rem]'>
-            <img src={Image1} alt="" className="w-[7rem] h-[7rem] rounded-full"/>
-            <div>
-              Today: 25th Dec 2025 <br />
-              Role: Head Master <br />
-              Subject: Mathematics <br />
-              Age: 20 Years
-            </div>
-          </CardContent>
+        <Card variant="primary" className='mt-3 col-span-4 bg-gradient-to-r from-[#CA590388] from-[30%] to-[#FFFFFF] to-[112%] h-[10rem] lg:col-span-1 sm:col-span-5 center items-center justify-start pl-4'>
+          
+          <div>
+            <h2 className='text-[#003B6C] font-[700] text-[1.2rem]'>Welcome Back! Mr. Deo</h2>
+          </div>
+          <div className='flex center items-center gap-4 mt-3'>
+            <img src={Image1} alt="" className='w-[5rem] h-[4rem] rounded-full'/>
+            <CardContent>
+              <p><span className='font-[1000]'>Today:</span> 30/12/2025</p>
+              <p><span className='font-[1000]'>Specialization:</span> Teacher</p>
+              <p><span className='font-[1000]'>Subject:</span> Kiswahili</p>
+              <p><span className='font-[1000]'>Age:</span> 32</p>
+            </CardContent>
+          </div>
+          
         </Card>
         <Card variant="primary" className="lg:col-span-1 sm:col-span-2 relative">
           <CardHeader className='border-b-0 items-center'>Upcoming Lesson</CardHeader>
@@ -66,13 +70,6 @@ It’s a reminder that real growth and success come from doing, not just knowing
             from-[#0180E196] from-[40%] 
             to-[#ffff] to-[100%]">
           <CardHeader className='font-[600] border-b-0 pt-2'>Gas Inventory</CardHeader>
-          <CardContent>100 KG Available</CardContent>
-          
-        </Card>
-        <Card variant="primary" className="lg:col-span-2 row-span-4 h-[20rem] sm:col-span-2 relative bg-gradient-to-r 
-            from-[red]  
-            to-[blue]">
-          <CardHeader>Gas Inventory</CardHeader>
           <CardContent>100 KG Available</CardContent>
           
         </Card>
