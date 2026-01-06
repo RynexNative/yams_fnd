@@ -12,7 +12,7 @@ function NavBar({ title, children }: NavbarProps) {
   if (isMobile) {
       console.log(`Hii ni mobile ndani` + openMobile)
       return (
-        <header className="fixed top-0 right-0 h-16 bg-[rgb(var(--bg))] dark:border-gray-700 flex items-center px-6 gap-6 w-full z-4">
+        <header className="fixed relative top-0 right-0 h-16 bg-[rgb(var(--bg))] dark:border-gray-700 flex items-center px-6 gap-6 w-full z-4">
           {children}
           {/* Page title */}
           <h1 className="text-xl font-semibold text-[rgb(var(--text))]">{title}</h1>
@@ -31,7 +31,7 @@ function NavBar({ title, children }: NavbarProps) {
   }
   if (open) {
     return (
-      <header className="fixed top-0 left-64 right-0 h-16 bg-[rgb(var(--bg))] dark:border-gray-700 flex items-center px-6 gap-6  transition delay-150 duration-300 ease-in-out" style={{
+      <header className="fixed top-0 left-64 right-0 h-16 bg-[rgb(var(--bg))] dark:border-gray-700 flex items-center px-6 gap-6  transition delay-150 duration-300 ease-in-out z-[99]" style={{
       }}>
         {children}
         {/* Page title */}
