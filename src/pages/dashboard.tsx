@@ -1,7 +1,17 @@
 import React from 'react'
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/Card'
 import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from '@/components/ui/Table'
+import {
+  List,
+  ListItem,
+  ListMarker,
+  ListMedia,
+  ListContent,
+  ListTitle,
+  ListDescription,
+} from "@/components/ui/List";
 import Image1 from "@/assets/images/png/jump-happy.png"
+import Image2 from "@/assets/images/png/profile_sample.png"
 
 function dashboard() {
   return (
@@ -72,36 +82,239 @@ function dashboard() {
 
       </Card>
 
-      <Card variant="primary" className="rounded-[0px] sm:col-span-2 lg:col-span-1 lg:row-span-4 lg:h-[35rem] bg-[#FFF]">
-        <CardHeader className='font-[600] border-b-0 pt-2'>Gas Inventory</CardHeader>
-        <CardContent>
-          <Table variant="primary">
-            <TableHeader variant="primary">
-              <tr>
-                <TableHead>Jina</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Status</TableHead>
-              </tr>
-            </TableHeader>
+      <Card variant="primary" className="lg:mb-[2rem] rounded-[0px] sm:col-span-2 lg:col-span-1 lg:row-span-4 lg:h-[60rem] bg-[#FFF]">
+        <CardHeader className='font-[400] border-b-0 pt-2 text-[0.8rem]'>Teachers on Duty</CardHeader>
+        <CardContent className='text-[0.7rem]'>
+          <List variant="spacious" className='lg:mt-[0.5rem] pl-4'>
 
-            <TableBody>
-              <TableRow>
-                <TableCell>Texa</TableCell>
-                <TableCell>texa@email.com</TableCell>
-                <TableCell className="text-green-600 font-medium">
-                  Active
-                </TableCell>
-              </TableRow>
+            {/* MWALIMU 1 */}
+            <ListItem>
+              <ListMarker type="none" value={1} />
 
-              <TableRow>
-                <TableCell>John</TableCell>
-                <TableCell>john@email.com</TableCell>
-                <TableCell className="text-red-600 font-medium">
-                  Inactive
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+              <ListMedia
+                src={Image2}
+                size={48}
+              />
+
+              <ListContent>
+                <ListTitle>Mwalimu John Doe</ListTitle>
+                <ListDescription>
+                  Anafundisha: Hisabati, Fizikia
+                </ListDescription>
+                <ListDescription>
+                  Madarasa: Form I – Form III
+                </ListDescription>
+              </ListContent>
+            </ListItem>
+
+            {/* MWALIMU 2 */}
+            <ListItem>
+              <ListMarker type="none" value={2} />
+
+              <ListMedia
+                src={Image2}
+                size={48}
+              />
+
+              <ListContent>
+                <ListTitle>Mwalimu Jane Smith</ListTitle>
+                <ListDescription>
+                  Anafundisha: Biolojia
+                </ListDescription>
+                <ListDescription>
+                  Madarasa: Form I – Form III
+                </ListDescription>
+                <ListDescription className='flex gap-1'>
+                  <ListMarker type="custom">
+                    ⭐
+                  </ListMarker>
+                  Mwalimu Bora wa Mwaka
+                </ListDescription>
+              </ListContent>
+            </ListItem>
+
+          </List>
+
+        </CardContent>
+
+        <CardHeader className='font-[400] border-b-0 pt-2 text-[0.8rem]'>Other Staff Members</CardHeader>
+        <CardContent className='text-[0.7rem]'>
+          <List variant="spacious" className='lg:mt-[0.5rem] pl-4'>
+
+            {/* MWALIMU 1 */}
+            <ListItem className='m-0 p-0'>
+              <ListMarker type="none" />
+
+              <ListMedia
+                src={Image2}
+                size={48}
+              />
+
+              <ListContent>
+                <ListTitle>Mwalimu John Doe</ListTitle>
+                <ListDescription>
+                  Anafundisha: Hisabati, Fizikia
+                </ListDescription>
+                <ListDescription>
+                  Madarasa: Form I – Form III
+                </ListDescription>
+              </ListContent>
+            </ListItem>
+
+            {/* MWALIMU 2 */}
+            <ListItem>
+              <ListMarker type="none" value={2} />
+
+              <ListMedia
+                src={Image2}
+                size={48}
+              />
+
+              <ListContent>
+                <ListTitle>Mwalimu Jane Smith</ListTitle>
+                <ListDescription>
+                  Anafundisha: Biolojia
+                </ListDescription>
+                <ListDescription>
+                  Madarasa: Form I – Form III
+                </ListDescription>
+              </ListContent>
+            </ListItem>
+
+            <ListItem>
+              <ListMarker type="none" value={2} />
+
+              <ListMedia
+                src={Image2}
+                size={48}
+              />
+
+              <ListContent>
+                <ListTitle>Mwalimu Jane Smith</ListTitle>
+                <ListDescription>
+                  Anafundisha: Biolojia
+                </ListDescription>
+                <ListDescription>
+                  Madarasa: Form I – Form III
+                </ListDescription>
+              </ListContent>
+            </ListItem>
+
+            <ListItem>
+              <ListMarker type="none" value={2} />
+
+              <ListMedia
+                src={Image2}
+                size={48}
+              />
+
+              <ListContent>
+                <ListTitle>Mwalimu Jane Smith</ListTitle>
+                <ListDescription>
+                  Anafundisha: Biolojia
+                </ListDescription>
+                <ListDescription>
+                  Madarasa: Form I – Form III
+                </ListDescription>
+              </ListContent>
+            </ListItem>
+
+            <ListItem>
+              <ListMarker type="none" value={2} />
+
+              <ListMedia
+                src={Image2}
+                size={48}
+              />
+
+              <ListContent>
+                <ListTitle>Mwalimu Jane Smith</ListTitle>
+                <ListDescription>
+                  Anafundisha: Biolojia
+                </ListDescription>
+                <ListDescription>
+                  Madarasa: Form I – Form III
+                </ListDescription>
+              </ListContent>
+            </ListItem>
+            <ListDescription className='text-center lg:m-[3rem] cursor-pointer text-blue-600 underline'>
+              See More
+            </ListDescription>
+
+            
+            
+
+          </List>
+
+        </CardContent>
+        <CardHeader className='font-[400] border-b-0 pt-2 text-[0.8rem]'>Adminstration Members</CardHeader>
+        <CardContent className='text-[0.7rem]'>
+          <List variant="spacious" className='lg:mt-[0.5rem] pl-4'>
+
+            {/* MWALIMU 1 */}
+            <ListItem className='m-0 p-0'>
+              <ListMarker type="none" />
+
+              <ListMedia
+                src={Image2}
+                size={48}
+              />
+
+              <ListContent>
+                <ListTitle>Mwalimu John Doe</ListTitle>
+                <ListDescription>
+                  Anafundisha: Hisabati, Fizikia
+                </ListDescription>
+                <ListDescription>
+                  Madarasa: Form I – Form III
+                </ListDescription>
+              </ListContent>
+            </ListItem>
+
+            {/* MWALIMU 2 */}
+            <ListItem>
+              <ListMarker type="none" value={2} />
+
+              <ListMedia
+                src={Image2}
+                size={48}
+              />
+
+              <ListContent>
+                <ListTitle>Mwalimu Jane Smith</ListTitle>
+                <ListDescription>
+                  Anafundisha: Biolojia
+                </ListDescription>
+                <ListDescription>
+                  Madarasa: Form I – Form III
+                </ListDescription>
+              </ListContent>
+            </ListItem>
+            
+
+            <ListItem>
+              <ListMarker type="none" value={2} />
+
+              <ListMedia
+                src={Image2}
+                size={48}
+              />
+
+              <ListContent>
+                <ListTitle>Mwalimu Jane Smith</ListTitle>
+                <ListDescription>
+                  Anafundisha: Biolojia
+                </ListDescription>
+                <ListDescription>
+                  Madarasa: Form I – Form III
+                </ListDescription>
+              </ListContent>
+            </ListItem>
+            <ListDescription className='text-center lg:m-[3rem] cursor-pointer text-blue-600 underline'>
+              See More
+            </ListDescription>
+
+          </List>
 
         </CardContent>
       </Card>
@@ -113,7 +326,7 @@ function dashboard() {
       <Card variant="primary" className="rounded-[0px] col-span-4 ml-2 sm:col-span-2 lg:col-span-3 lg:row-span-4 lg:h-[25rem] bg-[#FFF]">
         <CardHeader className='font-[600] border-b-0 pt-2'>Gas Inventory</CardHeader>
         <CardContent>
-          
+
           <Table variant="primary">
             <TableHeader variant="primary">
               <tr>

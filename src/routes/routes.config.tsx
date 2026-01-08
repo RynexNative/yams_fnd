@@ -7,6 +7,10 @@ import Login from "../pages/auth/Login";
 import AppLayout from "../components/layouts/AppLayout";
 import { PermissionDTO } from "@/dto/permission.dto";
 import NotFound from "@/pages/Error/NotFound";
+import LessonPlan from "@/pages/teachers/LessonPlan";
+import SchemeOfWork from "@/pages/teachers/SchemeOfWork";
+import Draft from "@/pages/teachers/Draft"
+import Attendance from "@/pages/teachers/Attendance";
 
 export interface AppRoute {
   path: string;
@@ -46,5 +50,37 @@ export const routes: AppRoute[] = [
         title: "Student Details",
       },
     ],
+  },
+  {
+    path: "/lessonplan",
+    element: <LessonPlan />,
+    isProtected: true,
+    permission: "can_request_tenant",
+    layout: <AppLayout />,
+    title: "Lesson Plan",
+  },
+  {
+    path: "/schemeofwork",
+    element: <SchemeOfWork />,
+    isProtected: true,
+    permission: "can_request_tenant",
+    layout: <AppLayout />,
+    title: "Scheme of work",
+  },
+  {
+    path: "/draft",
+    element: <Draft />,
+    isProtected: true,
+    permission: "can_request_tenant",
+    layout: <AppLayout />,
+    title: "Draft",
+  },
+  {
+    path: "/attendance",
+    element: <Attendance />,
+    isProtected: true,
+    permission: "can_request_tenant",
+    layout: <AppLayout />,
+    title: "Attendance",
   },
 ];

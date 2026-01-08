@@ -1,4 +1,4 @@
-import { Users, UserPlus, LayoutDashboard, Settings, File, ChevronRight, BookDashed, PlaneIcon, List } from "lucide-react"
+import { Users, UserPlus, LayoutDashboard, Settings, File, ChevronRight, BookDashed, PlaneIcon, List, FileArchive, DraftingCompass } from "lucide-react"
 
 export type MenuItem = {
   label: string
@@ -15,6 +15,27 @@ export const menuItems: MenuItem[] = [
   },
 
   {
+    label: "Lesson Plan",
+    icon: <BookDashed />,
+    href:'/lessonplan',
+  },
+
+  {
+    label: "Scheme of Work",
+    icon: <FileArchive />,
+    href: "/schemeofwork",
+  },
+  {
+    label: "Draft",
+    icon: <DraftingCompass />,
+    href: "/draft",
+  },
+  {
+    label: "Attendance",
+    icon: <Users />,
+    href: "/attendance",
+  },
+  {
     label: "Students Management",
     icon: <Users />,
     children: [
@@ -29,17 +50,6 @@ export const menuItems: MenuItem[] = [
       },
     ],
   },
-  {
-    label: "Lesson Plan",
-    icon: <BookDashed />,
-    href:'',
-  },
-
-  {
-    label: "Scheme of Work",
-    icon: <Users />,
-    href: "/teachers",
-  },
 
   {
     label: "Notes",
@@ -51,11 +61,7 @@ export const menuItems: MenuItem[] = [
       }
     ]
   },
-  {
-    label: "Attendance",
-    icon: <Users />,
-    href: "/teachers",
-  },
+  
 
   {
     label: "Settings",
