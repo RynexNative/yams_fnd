@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/Card'
-import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from '@/components/ui/Table'
+import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/Cards'
+import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from '@/components/ui/Tables'
 import {
   List,
   ListItem,

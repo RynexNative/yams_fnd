@@ -32,7 +32,7 @@ interface CardProps extends BaseProps {
   variant?: CardVariant;
 }
 
-export const Card: React.FC<CardProps> = ({
+export const Cards: React.FC<CardProps> = ({
   variant = "default",
   className,
   children,

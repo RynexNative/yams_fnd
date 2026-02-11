@@ -1,323 +1,316 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AuthService } from "@/api/auth/auth.service";
-import { useAuthStore } from "@/store/auth.store";
-import { User } from "@/api/auth/user.service";
-import { usePermissionStore } from "@/store/permission.store"
+// import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { AuthService } from "@/api/auth/auth.service";
+// import { useAuthStore } from "@/store/auth.store";
+// import { User } from "@/api/auth/user.service";
+// import { usePermissionStore } from "@/store/permission.store";
+// import { PERMISSIONS, PermissionCode, PermissionKey } from "@/dto/permission.contract";
 
-export default function Login() {
-  const navigate = useNavigate();
-  const login = useAuthStore((s) => s.login);
-  const perm = usePermissionStore((s)=>s.setPermissions)
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+// export default function Login() {
+//   const navigate = useNavigate();
+//   const login = useAuthStore((s) => s.login);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
+//   // Hapa tunatumia setPermissionsFromBackend kutoka store
+//   const setPermissions = usePermissionStore((s) => s.setPermissionsFromBackend);
 
-    try {
-      // 1️⃣ Login
-      const res = await AuthService.loginWithOAuth2(email, password);
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState<string | null>(null);
 
-      if (!res.access_token) throw new Error("No access token received");
-
-      // 2️⃣ Store user + token in Zustand store
-      login({
-        user: res.user ?? { id: "temp", name: email, email },
-        token: res.access_token,
-      });
-
-      // 3️⃣ Hit GraphQL MyProfile
-      const profile = await User.MyProfile(); // token already in headers
-      console.log("Profile:", profile);
-
-      perm(profile.data[0].role.permissions[0].permissionCode)
-
-      // 4️⃣ Navigate to dashboard
-      navigate("/dashboard", { replace: true });
-    } catch (err: any) {
-      console.error(err);
-      setError(err?.response?.data?.detail || "Login failed. Check credentials.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="w-full max-w-md rounded-2xl bg-card shadow-xl p-8">
-        
-        {/* Logo / Title */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-foreground">
-            YAMS Login
-          </h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Sign in to continue
-          </p>
-        </div>
-
-        {/* Error */}
-        {error && (
-          <div className="mb-4 rounded-lg bg-destructive/10 text-destructive px-4 py-2 text-sm">
-            {error}
-          </div>
-        )}
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              className="w-full rounded-lg border border-border bg-background px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full rounded-lg border border-border bg-background px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-lg bg-primary text-primary-foreground py-2 font-medium hover:opacity-90 transition disabled:opacity-50"
-          >
-            {loading ? "Signing in..." : "Login"}
-          </button>
-        </form>
-
-        {/* Footer */}
-        <div className="mt-6 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} YAMS
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
-
-
-// ============================================================================
-// Google OAuth2 Login Component
-// ============================================================================
-
-
-// import { useEffect } from "react";
-
-// const GOOGLE_CLIENT_ID = "104274152778-kcpt0qeu13254jo5ouq9jr6i6ri05vld.apps.googleusercontent.com";
-// const GRAPHQL_ENDPOINT = "http://localhost:8000/api/v3";
-
-// interface GoogleCredentialResponse {
-//   credential: string;
-// }
-
-// interface LoginResponse {
-//   data?: {
-//     loginWithGoogle: {
-//       accessToken: string;
-//       refreshToken: string;
-//       expiresIn: number;
-//       tokenType: string;
-//     };
-//   };
-//   errors?: any;
-// }
-
-// export default function GoogleLogin() {
-//   useEffect(() => {
-//     if (!window.google) return;
-
-//     window.google.accounts.id.initialize({
-//       client_id: GOOGLE_CLIENT_ID,
-//       callback: handleGoogleLogin,
-//     });
-
-//     window.google.accounts.id.renderButton(
-//       document.getElementById("google-login-btn"),
-//       {
-//         theme: "outline",
-//         size: "large",
-//         text: "signin_with",
-//         shape: "rectangular",
-//       }
-//     );
-//   }, []);
-
-//   const handleGoogleLogin = async (
-//     response: GoogleCredentialResponse
-//   ) => {
-//     const idToken = response.credential;
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     setError(null);
+//     setLoading(true);
 
 //     try {
-//       const res = await fetch(GRAPHQL_ENDPOINT, {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//           query: `
-//             mutation LoginWithGoogle($idToken: String!) {
-//               loginWithGoogle(idToken: $idToken) {
-//                 accessToken
-//                 refreshToken
-//                 expiresIn
-//                 tokenType
-//                 scope
-//               }
-//             }
-//           `,
-//           variables: {
-//             idToken,
-//           },
-//         }),
+//       // 1️⃣ Login API
+//       const res = await AuthService.loginWithOAuth2(email, password);
+
+//       if (!res.access_token) throw new Error("No access token received");
+
+//       login({
+//         user: res.user ?? { id: "temp", name: email, email },
+//         token: res.access_token,
+//         account_type: null,
 //       });
 
-//       const data: LoginResponse = await res.json();
+//       // 2️⃣ Hit GraphQL MyProfile (token already in headers)
+//       const profile = await User.MyProfile();
+//       console.log("Profile:", profile);
 
-//       if (data.errors) {
-//         console.error(data.errors);
-//         alert("Google login failed");
-//         return;
-//       }
+//       // 3️⃣ Store user in AuthStore
+//       login({
+//         user: profile?.data,
+//         token: res.access_token,
+//         account_type: profile?.data[0].accountType ?? null,
+//       });
 
-//       const tokens = data.data?.loginWithGoogle;
+//       // 4️⃣ Extract permissions from backend
+//       const backendPermissions: PermissionCode[] =
+//         profile.data[0].role?.permissions?.map(
+//           (p: { permissionCode: PermissionCode }) => p.permissionCode
+//         ) ?? [];
 
-//       if (!tokens) {
-//         alert("No token received");
-//         return;
-//       }
+//       // 6️⃣ Set permissions in store
+//       setPermissions(backendPermissions);
 
-//       localStorage.setItem("access_token", tokens.accessToken);
-//       localStorage.setItem("refresh_token", tokens.refreshToken);
-
-//       console.log("Login success:", tokens);
-//       alert("Login successful 🎉");
-//     } catch (error) {
-//       console.error("Login error:", error);
+//       // 7️⃣ Navigate to dashboard
+//       navigate("/t/dashboard", { replace: true });
+//     } catch (err: any) {
+//       console.error(err);
+//       setError(err?.response?.data?.detail || "Login failed. Check credentials.");
+//     } finally {
+//       setLoading(false);
 //     }
 //   };
 
 //   return (
-//     <div style={styles.container}>
-//       <h2>Login with Google</h2>
-//       <div id="google-login-btn" />
+//     <div className="min-h-screen flex items-center justify-center bg-background">
+//       <div className="w-full max-w-md rounded-2xl bg-card shadow-xl p-8">
+
+//         {/* Logo / Title */}
+//         <div className="text-center mb-8">
+//           <h1 className="text-2xl font-bold text-foreground">
+//             YAMS Login
+//           </h1>
+//           <p className="text-muted-foreground text-sm mt-1">
+//             Sign in to continue
+//           </p>
+//         </div>
+
+//         {/* Error */}
+//         {error && (
+//           <div className="mb-4 rounded-lg bg-destructive/10 text-destructive px-4 py-2 text-sm">
+//             {error}
+//           </div>
+//         )}
+
+//         {/* Form */}
+//         <form onSubmit={handleSubmit} className="space-y-5">
+//           <div>
+//             <label className="block text-sm font-medium mb-1">
+//               Email
+//             </label>
+//             <input
+//               type="email"
+//               required
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               placeholder="you@example.com"
+//               className="w-full rounded-lg border border-border bg-background px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+//             />
+//           </div>
+
+//           <div>
+//             <label className="block text-sm font-medium mb-1">
+//               Password
+//             </label>
+//             <input
+//               type="password"
+//               required
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               placeholder="••••••••"
+//               className="w-full rounded-lg border border-border bg-background px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+//             />
+//           </div>
+
+//           <button
+//             type="submit"
+//             disabled={loading}
+//             className="w-full rounded-lg bg-primary text-primary-foreground py-2 font-medium hover:opacity-90 transition disabled:opacity-50"
+//           >
+//             {loading ? "Signing in..." : "Login"}
+//           </button>
+//         </form>
+
+//         {/* Footer */}
+//         <div className="mt-6 text-center text-sm text-muted-foreground">
+//           © {new Date().getFullYear()} YAMS
+//         </div>
+//       </div>
 //     </div>
 //   );
 // }
 
-// const styles: React.CSSProperties = {
-//   height: "100vh",
-//   display: "flex",
-//   flexDirection: "column",
-//   justifyContent: "center",
-//   alignItems: "center",
-// };
 
 
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { GraduationCap, Eye, EyeOff, ArrowLeft, Loader2 } from "lucide-react";
+// import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
+import { motion } from "framer-motion";
 
-// ============================================================================
-// End of Google OAuth2 Login Component
-// ============================================================================
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  // const { login, isLoading } = useAuth();
+  const navigate = useNavigate();
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const success = true
+    if (success) {
+      toast.success("Welcome back!");
+      navigate("/t/dashboard");
+    } else {
+      toast.error("Invalid email or password");
+    }
+  };
 
-// // ============================================================================
-// // prove of concept for session_based login
-// // ============================================================================
+  return (
+    <div className="min-h-screen flex">
+      {/* Left Side - Form */}
+      <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-20 xl:px-24">
+        <div className="mx-auto w-full max-w-sm">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to home
+            </Link>
 
-// import { useState, useEffect } from "react";
+            <div className="flex items-center gap-3 mb-8">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-primary shadow-lg">
+                <GraduationCap className="h-7 w-7 text-primary-foreground" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold font-display">Welcome back</h1>
+                <p className="text-sm text-muted-foreground">
+                  Sign in to your YAMS account
+                </p>
+              </div>
+            </div>
 
-// function getCookie(name: string) {
-//   return document.cookie
-//     .split("; ")
-//     .find(row => row.startsWith(name + "="))
-//     ?.split("=")[1];
-// }
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <Label htmlFor="email">Email or Username</Label>
+                <Input
+                  id="email"
+                  type="text"
+                  placeholder="Enter your email or username"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="mt-2 h-12"
+                />
+              </div>
 
-// export default function LoginPage() {
-//   const [username, setUsername] = useState("");
-//   const [password, setPassword] = useState("");
+              <div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="password">Password</Label>
+                  <Link
+                    to="/forgot-password"
+                    className="text-sm text-primary hover:underline"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
+                <div className="relative mt-2">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="h-12 pr-12"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5" />
+                    ) : (
+                      <Eye className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
 
-//   // 1️⃣ pata CSRF cookie mapema
-//   useEffect(() => {
-//     fetch("http://localhost:8000/auth/csrf/", {
-//       credentials: "include",
-//     });
-//   }, []);
+              <Button
+                type="submit"
+                className="w-full h-12 bg-gradient-primary hover:opacity-90 transition-opacity"
+              >
+                {/* {isLoading ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  "Sign In"
+                )} */}
+              </Button>
+            </form>
 
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="font-medium text-primary hover:underline"
+              >
+                Create account
+              </Link>
+            </p>
 
-//     const csrfToken = getCookie("csrftoken");
+            {/* Demo Credentials */}
+            <div className="mt-8 p-4 rounded-xl bg-muted/50 border border-border">
+              <p className="text-xs font-medium text-muted-foreground mb-2">
+                Demo Credentials
+              </p>
+              <div className="space-y-1 text-xs">
+                <p>
+                  <span className="text-muted-foreground">Teacher:</span>{" "}
+                  casa1@casa.com / casa
+                </p>
+                <p>
+                  <span className="text-muted-foreground">Admin:</span>{" "}
+                  casa2@casa.com / casa
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
 
-//     const res = await fetch("http://localhost:8000/auth/login/", {
-//       method: "POST",
-//       credentials: "include",
-//       headers: {
-//         "Content-Type": "application/json",
-//         "X-CSRFToken": csrfToken || "",
-//       },
-//       body: JSON.stringify({ username, password }),
-//     });
+      {/* Right Side - Visual */}
+      <div className="hidden lg:flex lg:flex-1 relative bg-gradient-primary">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        <div className="relative flex flex-col items-center justify-center w-full p-12 text-primary-foreground">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-center"
+          >
+            <div className="w-24 h-24 mx-auto mb-8 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center">
+              <GraduationCap className="h-12 w-12" />
+            </div>
+            <h2 className="text-3xl font-bold font-display mb-4">
+              Youth Academic
+              <br />
+              Management System
+            </h2>
+            <p className="text-lg opacity-90 max-w-md">
+              Empowering educators with modern tools to manage, teach, and
+              inspire the next generation.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-//     const text = await res.text();
-//     console.log("RAW RESPONSE:", text);
-
-//     let data;
-//     try {
-//       data = JSON.parse(text);
-//     } catch {
-//       alert("Backend error (not JSON). Check Django logs.");
-//       return;
-//     }
-
-//     if (data.success) {
-//       window.location.href = "/dashboard";
-//     } else {
-//       alert(data.error || "Login failed");
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-64 mx-auto mt-20">
-//       <input
-//         type="text"
-//         placeholder="Username"
-//         value={username}
-//         onChange={(e) => setUsername(e.target.value)}
-//         className="border border-gray-300 rounded px-3 py-2"
-//       />
-
-//       <input
-//         type="password"
-//         placeholder="Password"
-//         value={password}
-//         onChange={(e) => setPassword(e.target.value)}
-//         className="border border-gray-300 rounded px-3 py-2"
-//       />
-
-//       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
-//     </form>
-//   );
-// }
+export default Login;

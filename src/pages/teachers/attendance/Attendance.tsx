@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/Card";
-import {Table, TableHeader, TableHead,TableRow, TableBody, TableCell } from "@/components/ui/Table"
+import { Card, CardContent, CardHeader } from "@/components/ui/Cards";
+import {Table, TableHeader, TableHead,TableRow, TableBody, TableCell } from "@/components/ui/Tables"
 import React from "react";
 
 function Attendance() {

@@ -1,51 +1,49 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { routes, AppRoute } from "./routes.config";
 import ProtectedRoute from "./ProtectedRoute";
+import NotFound from "@/pages/Error/NotFound";
 import React from "react";
 
-export function renderRoutes(routes: AppRoute[]) {
-  return routes.map((route) => {
-    // Protected wrapper
-    const guardedElement = route.isProtected ? (
-      <ProtectedRoute permission={route.permission}>
-        {route.element}
-      </ProtectedRoute>
-    ) : (
-      route.element
-    );
+function renderRoute(route: AppRoute): React.ReactNode {
+  const element = route.isProtected ? (
+    <ProtectedRoute
+      permission={route.permission}
+      allowedAccountTypes={route.allowedAccountTypes}
+    >
+      {route.element}
+    </ProtectedRoute>
+  ) : (
+    route.element
+  );
 
-    // CASE 1: Route has layout (IMPORTANT)
-    if (route.layout) {
-      return (
-        <Route key={route.path} element={route.layout}>
-          <Route
-            path={route.path}
-            element={guardedElement}
-          />
-          {route.children && renderRoutes(route.children)}
-        </Route>
-      );
-    }
-
-    // CASE 2: Normal route
+  /**
+   * ROUTE WITH LAYOUT
+   */
+  if (route.layout) {
     return (
-      <Route
-        key={route.path}
-        path={route.path}
-        element={guardedElement}
-      >
-        {route.children && renderRoutes(route.children)}
+      <Route key={route.path} element={route.layout}>
+        <Route path={route.path} element={element} />
+        {route.children?.map(renderRoute)}
       </Route>
     );
-  });
-}
+  }
 
+  /**
+   * NORMAL ROUTE
+   */
+  return (
+    <Route key={route.path} path={route.path} element={element}>
+      {route.children?.map(renderRoute)}
+    </Route>
+  );
+}
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        {renderRoutes(routes)}
+        {routes.map(renderRoute)}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,52 +1,58 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import {
+  PERMISSIONS,
+  PermissionKey,
+  PermissionCode,
+} from "@/dto/permission.contract";
 
-import { PermissionDTO } from "@/dto/permission.dto";
-
-/**
- * 🔐 Permission list (contract ya app nzima)
- * Usitumie string ovyo ovyo sehemu nyingine
- */
-
-/**
- * 📦 Permission store state
- */
 interface PermissionState {
-  permissions: PermissionDTO[];
+  permissions: PermissionCode[];
 
-  /** Weka permissions zote (hutumika baada ya login) */
-  setPermissions: (permissions: PermissionDTO[]) => void;
-
-  /** Angalia kama user ana permission fulani */
-  hasPermission: (permission: PermissionDTO) => boolean;
-
-  /** Futa permissions zote (logout) */
+  setPermissionsFromBackend: (permissions: string[]) => void;
+  can: (permission: PermissionKey) => boolean;
   clearPermissions: () => void;
 }
 
-/**
- * 🏗️ Permission Store (Enterprise-ready)
- */
 export const usePermissionStore = create<PermissionState>()(
   persist(
     (set, get) => ({
+      // 👉 tunaanza na empty array (hakuna false)
       permissions: [],
 
-      setPermissions: (permissions) =>
-        set({
-          permissions,
-        }),
+      /**
+       * Backend → ["can_view_dashboard", ...]
+       * Store   → ["CAN_VIEW_DASHBOARD", ...]
+       */
+      setPermissionsFromBackend: (backendPermissions) => {
+        const mapped: PermissionCode[] = [];
 
-      hasPermission: (permission) =>
-        get().permissions.includes(permission),
+        backendPermissions.forEach((code) => {
+          const upperCode = code.toUpperCase();
 
-      clearPermissions: () =>
-        set({
-          permissions: [],
-        }),
+          const exists = Object.values(PERMISSIONS).includes(
+            upperCode as PermissionCode
+          );
+
+          if (exists) {
+            mapped.push(upperCode as PermissionCode);
+          }
+        });
+
+        set({ permissions: mapped });
+      },
+
+      /**
+       * permissionKey → "CAN_VIEW_DASHBOARD"
+       */
+      can: (permission) => {
+        return get().permissions.includes(permission);
+      },
+
+      clearPermissions: () => set({ permissions: [] }),
     }),
     {
-      name: "yams-permissions", // localStorage key
+      name: "yams-permissions",
     }
   )
 );
